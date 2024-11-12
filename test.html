@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Buy custom-made epoxy resin tables, unique designs, and quality craftsmanship.">
+    <title>Epoxy Tables Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Simple CSS for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #333;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #DAA520;
+            padding: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 15px;
+        }
+        nav a:hover {
+            background-color: #1abc9c;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .product {
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+            background-color: #fff;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .product h3 {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .product p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        footer {
+            background-color: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 1px;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #16a085;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Custom Epoxy Resin Tables</h1>
+    <p>Unique, Handmade Epoxy Tables for Your Home or Office</p>
+</header>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About Us</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<div id="home" class="container">
+    <h2>Welcome to Epoxy Tables Store!</h2>
+    <p>We offer custom-made epoxy resin tables with unique designs. Each piece is handmade with precision and care to bring a beautiful, functional piece of art to your space.</p>
+</div>
+
+<div id="products" class="container">
+    <h2>Our Featured Products</h2>
+    <div class="product">
+        <img src="table1.jpg" alt="Epoxy Table 1">
+        <h3>Modern River Epoxy Table</h3>
+        <p>Price: Starting from 500DT</p>
+        <p>This beautiful river-style epoxy table is crafted from solid wood with vibrant blue resin. Perfect for your living room or office.</p>
+    </div>
+    <div class="product">
+        <img src="table2.jpg" alt="Epoxy Table 2">
+        <h3>Rustic Epoxy Dining Table</h3>
+        <p>Price: Starting from 900DT</p>
+        <p>A stunning epoxy dining table with a blend of rustic wood and deep green resin. Handmade with care and attention to detail.</p>
+    </div>
+    <div class="product">
+        <img src="table3.jpg" alt="Epoxy Table 3">
+        <h3>Luxury Black Epoxy Table</h3>
+        <p>Price: Starting from 600DT</p>
+        <p>A sleek, modern epoxy table with black resin and natural wood. Ideal for minimalist interiors.</p>
+    </div>
+</div>
+
+<div id="about" class="container">
+    <h2>About Us</h2>
+    <p>At Epoxy Tables Store, we specialize in designing and crafting high-quality epoxy resin tables. Our team of skilled artisans creates each table with precision, ensuring both beauty and functionality. We use only the finest materials to create custom tables that fit your style and needs.</p>
+</div>
+
+<!-- Contact Form Section -->
+<div id="contact" class="container">
+    <h2>Contact Us</h2>
+    <form id="form" class="contact-form">
+        <div class="field">
+            <label for="from_name">Your Name</label>
+            <input type="text" name="from_name" id="from_name" required />
+        </div>
+        <div class="field">
+            <label for="from_email">Your Email</label>
+            <input type="email" name="from_email" id="from_email" required />
+        </div>
+        <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" required></textarea>
+        </div>
+        <button type="submit" id="button">Send Email</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 Epoxy Tables Store | All Rights Reserved</p>
+</footer>
+
+<!-- EmailJS Script -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        emailjs.init("GtU3OTyxRjTe1suvx");
+
+        const btn = document.getElementById('button');
+        const form = document.getElementById('form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            btn.textContent = 'Sending...';
+
+            const serviceID = 'default_service';
+            const templateID = 'template_9dnlsdr';
+
+            emailjs.sendForm(serviceID, templateID, form)
+                .then(() => {
+                    btn.textContent = 'Send Email';
+                    alert('Sent!');
+                }, (err) => {
+                    btn.textContent = 'Send Email';
+                    alert('Error: ' + JSON.stringify(err));
+                });
+        });
+    });
+</script>
+
+</body>
+</html>
