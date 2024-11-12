@@ -40,15 +40,28 @@
             width: 90%;
             margin: 20px auto;
             text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
         .product {
-            display: inline-block;
-            width: 30%;
+            width: 100%;
+            max-width: 300px;
             margin: 20px;
             background-color: #000000;
             padding: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+        }
+        @media (min-width: 768px) {
+            .product {
+                width: 48%;
+            }
+        }
+        @media (min-width: 1024px) {
+            .product {
+                width: 30%;
+            }
         }
         .product img {
             width: 100%;
@@ -86,9 +99,28 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
         }
-        .contact-form button:hover {
-            background-color: #16a085;
+        .contact-form button .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid white;
+            border-top: 3px solid #16a085;
+            border-radius: 50%;
+            margin-left: 8px;
+            animation: spin 1s linear infinite;
+        }
+        .contact-form button.loading .spinner {
+            display: inline-block;
+        }
+        .contact-form button.loading .button-text {
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -100,10 +132,10 @@
 </header>
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
-    <a href="#about">About Us</a>
-    <a href="#contact">Contact</a>
+    <a href="#home" aria-label="Home">Home</a>
+    <a href="#products" aria-label="Products">Products</a>
+    <a href="#about" aria-label="About Us">About Us</a>
+    <a href="#contact" aria-label="Contact">Contact</a>
 </nav>
 
 <div id="home" class="container">
@@ -114,19 +146,19 @@
 <div id="products" class="container">
     <h2>Our Featured Products</h2>
     <div class="product">
-        <img src="images/table1.jpg" alt="Epoxy Table 1">
+        <img src="images/table1.jpg" alt="Modern River Epoxy Table with vibrant blue resin and solid wood">
         <h3>Modern River Epoxy Table</h3>
         <p>Price: Starting from 500DT</p>
         <p>This beautiful river-style epoxy table is crafted from solid wood with vibrant blue resin. Perfect for your living room or office.</p>
     </div>
     <div class="product">
-        <img src="images/table2.jpg" alt="Epoxy Table 2">
+        <img src="images/table2.jpg" alt="Rustic Epoxy Dining Table with deep green resin and rustic wood">
         <h3>Rustic Epoxy Dining Table</h3>
         <p>Price: Starting from 900DT</p>
         <p>A stunning epoxy dining table with a blend of rustic wood and deep green resin. Handmade with care and attention to detail.</p>
     </div>
     <div class="product">
-        <img src="images/table3.jpg" alt="Epoxy Table 3">
+        <img src="images/table3.jpg" alt="Luxury Black Epoxy Table with sleek black resin and natural wood">
         <h3>Luxury Black Epoxy Table</h3>
         <p>Price: Starting from 600DT</p>
         <p>A sleek, modern epoxy table with black resin and natural wood. Ideal for minimalist interiors.</p>
@@ -140,21 +172,24 @@
 
 <!-- Contact Form Section -->
 <div id="contact" class="container">
-    <h2>Contact Us</h2>
     <form id="form" class="contact-form">
+        <h2>Contact Us</h2>
         <div class="field">
             <label for="from_name">Your Name</label>
-            <input type="text" name="from_name" id="from_name" required />
+            <input type="text" name="from_name" id="from_name" required pattern="[A-Za-z\s]+" title="Please enter a valid name" />
         </div>
         <div class="field">
             <label for="from_email">Your Email</label>
-            <input type="email" name="from_email" id="from_email" required />
+            <input type="email" name="from_email" id="from_email" required title="Please enter a valid email address" />
         </div>
         <div class="field">
             <label for="message">Message</label>
             <textarea name="message" id="message" required></textarea>
         </div>
-        <button type="submit" id="button">Send Email</button>
+        <button type="submit" id="button">
+            <span class="button-text">Send Email</span>
+            <span class="spinner"></span>
+        </button>
     </form>
 </div>
 
@@ -175,17 +210,18 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            btn.textContent = 'Sending...';
+            btn.classList.add('loading');
 
             const serviceID = 'default_service';
             const templateID = 'template_9dnlsdr';
 
             emailjs.sendForm(serviceID, templateID, form)
                 .then(() => {
-                    btn.textContent = 'Send Email';
+                    btn.classList.remove('loading');
                     alert('Sent!');
+                    form.reset();
                 }, (err) => {
-                    btn.textContent = 'Send Email';
+                    btn.classList.remove('loading');
                     alert('Error: ' + JSON.stringify(err));
                 });
         });
